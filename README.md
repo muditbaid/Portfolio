@@ -5,7 +5,7 @@
 Welcome to my **ML Engineer Portfolio Website**! This website showcases my skills, projects, research, and contact information in a clean and interactive way.
 
 ## 📸 Live Demo
-🔗 [View Portfolio]([https://yourfirebaseapp.web.app](https://muditportfolio-7038e.web.app/)) _(Update after deployment)_
+🔗 [View Portfolio]([https://muditportfolio-7038e.web.app/]) _(Update after deployment)_
 
 ---
 
