@@ -4,8 +4,9 @@
 
 Welcome to my **ML Engineer Portfolio Website**! This website showcases my skills, projects, research, and contact information in a clean and interactive way.
 
-## 📸 Live Demo
-🔗 [View Portfolio]([https://muditportfolio-7038e.web.app/]) _(Update after deployment)_
+## 🔗 Live Portfolio  
+[View Portfolio](https://muditportfolio-7038e.web.app/) _(Update after deployment)_
+
 
 ---
 
