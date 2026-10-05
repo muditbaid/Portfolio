@@ -1,9 +1,10 @@
-name: Deploy site
+name: Deploy to AWS
 
+# Manual for now: the site is on GitHub Pages (pages.yml) until the AWS stack is
+# deployed. Then fill in the env values below and add the push trigger back:
+#   push:
+#     branches: [main]
 on:
-  push:
-    branches: [main]
-    paths-ignore: ['infra/**', 'legacy/**', '**.md']
   workflow_dispatch:
 
 permissions:

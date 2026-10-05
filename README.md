@@ -1,71 +1,36 @@
-# 🚀 My Portfolio Website
+# BAID Agentic Industries · Floor EOD
 
-![React Portfolio](https://img.shields.io/badge/React-18-blue) ![Firebase Hosting](https://img.shields.io/badge/Hosting-Firebase-orange) ![Status](https://img.shields.io/badge/Status-Active-green)
+Portfolio of **Mudit Baid**, ML engineer: LLM agents, expert routing and NLP systems.
 
-Welcome to my **ML Engineer Portfolio Website**! This website showcases my skills, projects, research, and contact information in a clean and interactive way.
+**Live:** https://muditbaid.github.io/Portfolio/
 
-## 🔗 Live Portfolio  
-[View Portfolio](https://muditportfolio-7038e.web.app/) _(Update after deployment)_
+The site is a Windows 98 desktop whose wallpaper is a live pixel-art office. Every project is an AI agent
+working at a desk; rooms are the navigation (projects, résumé, papers, skills, experience, contact).
+There's a plain one-page **Boring mode** in the taskbar for anyone in a hurry.
 
+## Run it
 
----
-
-## 📂 Features
-✅ **Personalized About Me Section**  
-✅ **Showcase of ML & AI Projects**  
-✅ **Skills & Technologies Section**  
-✅ **Contact Form for Easy Communication**  
-✅ **Fully Responsive & Optimized for Performance**  
-
----
-
-## 🛠️ Built With
-- **React.js** (Frontend)
-- **Cursor AI** (IDE/AI)
-- **Tailwind CSS** (Styling)
-- **Firebase Hosting** (Deployment)
-- **GitHub Actions** (CI/CD)
-
----
-
-## 🔧 Installation & Setup
-To run the project locally, follow these steps:
-
-### **1️⃣ Clone the Repository**
-```sh
-git clone https://github.com/muditbaid/Portfolio.git
-cd Portfolio
-```
-
-### **2️⃣ Install Dependencies**
-```sh
+```bash
 npm install
+npm run dev        # http://localhost:5173
+npm run build      # production build in dist/
 ```
 
-### **3️⃣ Start the Development Server**
-```sh
-npm start
-```
-Your site will now be live at **http://localhost:3000** 🚀.
+## Where things live
 
----
+| Path | What |
+|---|---|
+| `src/content/` | All the words: profile, projects (case files), experience, papers, tours, FAQ |
+| `src/world/` | The office: floor plan, pixel painting, agent simulation |
+| `src/views/` | Welcome window, taskbar, Start menu, dialogs, explorer, messenger, guestbook |
+| `infra/` | AWS CDK stack (S3 + CloudFront + GitHub OIDC deploy role) for the future AWS home |
+| `legacy/` | The 2024 portfolio |
 
-## 🌍 Deployment (Firebase Hosting)
-To deploy updates to Firebase:
-```sh
-npm run build
-firebase deploy
-```
-_(Make sure Firebase CLI is installed and configured)_
+## Deploys
 
----
+- **Now:** every push to `main` publishes to GitHub Pages (`.github/workflows/pages.yml`).
+- **Later:** AWS via `infra/` and `.github/workflows/deploy.yml`, see `infra/README.md`.
 
-## 📬 Contact  
-💼 **LinkedIn:** [linkedin.com/in/mudit--baid](https://www.linkedin.com/in/mudit--baid/)  
-📧 **Email:** [your.email@example.com](mailto:muditb0712@gmail.com)  
+## Contact
 
-Feel free to fork and customize this repository! ⭐  
-
----
-
-### 🔥 _Happy Coding!_ 🚀
+[LinkedIn](https://www.linkedin.com/in/mudit--baid/) · [GitHub](https://github.com/muditbaid) · muditbaid0407@gmail.com
