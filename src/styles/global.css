@@ -1063,3 +1063,20 @@ kbd {
     display: none;
   }
 }
+
+/* Tap-to-zoom: everything on the floor sits on one camera layer. */
+.camera {
+  position: absolute;
+  inset: 0;
+  transform-origin: 0 0;
+  transition: transform 0.48s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: transform;
+}
+
+/* Signs and the agents balloon get out of the way while zoomed in. */
+.camera.zoomed .sign,
+.camera.zoomed .balloon {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}

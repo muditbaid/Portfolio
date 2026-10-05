@@ -183,7 +183,14 @@ export default function App() {
   return (
     <>
       <main className="stage">
-        <OfficeFloor explore={!welcome} dimmed={welcome} onOpen={go} onCase={openCase} reducedMotion={reduced} />
+        <OfficeFloor
+          explore={!welcome}
+          dimmed={welcome}
+          onOpen={go}
+          onCase={openCase}
+          windowOpen={!!open}
+          reducedMotion={reduced}
+        />
         {!welcome && (
           <p className="explore-hint">
             ← Swipe to look around · tap any room or desk →
