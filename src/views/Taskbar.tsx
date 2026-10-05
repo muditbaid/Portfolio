@@ -32,6 +32,28 @@ function useClock() {
   return now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
 }
 
+type Lockable = ScreenOrientation & { lock?: (orientation: 'landscape') => Promise<void> }
+
+/** Full screen + landscape lock works on Android browsers; iPhones don't allow it, so the button hides there. */
+const canGoLandscape =
+  typeof document !== 'undefined' &&
+  document.fullscreenEnabled &&
+  typeof (screen.orientation as Lockable | undefined)?.lock === 'function' &&
+  window.matchMedia('(pointer: coarse)').matches
+
+async function toggleLandscape() {
+  if (document.fullscreenElement) {
+    await document.exitFullscreen()
+    return
+  }
+  try {
+    await document.documentElement.requestFullscreen()
+    await (screen.orientation as Lockable).lock?.('landscape')
+  } catch {
+    /* Lock refused: full screen alone still helps. */
+  }
+}
+
 export function Taskbar({ tasks, onOpen, onBoring }: Props) {
   const [menu, setMenu] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
@@ -118,6 +140,14 @@ export function Taskbar({ tasks, onOpen, onBoring }: Props) {
           ))}
         </div>
         <div className="tray">
+          {canGoLandscape && (
+            <button onClick={toggleLandscape} title="Full screen, landscape" aria-label="Full screen in landscape">
+              <span className="emoji" aria-hidden="true">
+                ⛶
+              </span>
+              <span className="tray-boring-label"> Full screen</span>
+            </button>
+          )}
           <button onClick={onBoring} title="Plain one-page version" aria-label="Boring mode: plain one-page version">
             <span className="emoji" aria-hidden="true">
               📄

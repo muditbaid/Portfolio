@@ -186,7 +186,7 @@ export default function App() {
         <OfficeFloor explore={!welcome} dimmed={welcome} onOpen={go} onCase={openCase} reducedMotion={reduced} />
         {!welcome && (
           <p className="explore-hint">
-            Tap any room or desk. Everything is also in the <b>Start</b> menu.
+            ← Swipe to look around · tap any room or desk →
           </p>
         )}
         {welcome && (

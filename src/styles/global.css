@@ -352,23 +352,44 @@ kbd {
 }
 
 /* Portrait screens: office on top, welcome window below it. */
+/* Portrait screens: the office keeps its full height and you swipe sideways to
+   look around, instead of shrinking into a strip at the top. */
 @media (max-aspect-ratio: 1/1) {
   .stage {
-    flex-direction: column;
-    justify-content: flex-start;
-    overflow-y: auto;
+    display: block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+  .stage::-webkit-scrollbar {
+    display: none;
   }
   .wallpaper {
-    flex: none;
-    width: 100vw;
+    height: calc(100dvh - var(--taskbar-h));
+    width: calc((100dvh - var(--taskbar-h)) * 16 / 9);
   }
+  /* Welcome becomes a bottom sheet over the office. */
   .welcome {
-    position: static;
-    transform: none;
-    width: calc(100% - 24px);
+    position: fixed;
+    top: auto;
+    left: 8px;
+    right: 8px;
+    bottom: calc(var(--taskbar-h) + 8px);
+    width: auto;
     max-width: 560px;
-    margin: 12px auto 16px;
-    animation: none;
+    max-height: 64dvh;
+    margin: 0 auto;
+    overflow-y: auto;
+    transform: none;
+    animation: sheet-up 0.3s ease-out both;
+  }
+}
+
+@keyframes sheet-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
   }
 }
 
@@ -898,13 +919,36 @@ kbd {
   }
 }
 
-/* Only shown on portrait screens, in the space under the office. */
+/* Portrait only: a short-lived pill saying the office pans. */
 .explore-hint {
   display: none;
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  margin: 0;
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.78);
   color: #fff;
+  border: 1px solid #fff;
+  width: max-content;
+  max-width: calc(100vw - 24px);
+  font-size: var(--fs-small);
   text-align: center;
-  margin: 16px;
-  font-size: var(--fs);
+  pointer-events: none;
+  animation: hint-out 6s ease-in forwards;
+}
+
+@keyframes hint-out {
+  0%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 @media (max-aspect-ratio: 1/1) {
