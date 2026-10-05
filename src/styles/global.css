@@ -1,0 +1,1021 @@
+:root {
+  --desktop: #008080;
+  --navy: #000080;
+  --face: #c0c0c0;
+  --ink: #111;
+  --muted: #4a4a4a;
+  --danger: #a00000;
+  --paper: #fff;
+  --cork: #a77b4f;
+
+  /* Pixel font for names and headings; a Win98-era sans for everything you read. */
+  --display: 'Pixelify Sans', 'Courier New', monospace;
+  --ui: Tahoma, Verdana, 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  --fs: clamp(14px, 0.25vw + 12.5px, 16px);
+  --fs-small: clamp(12px, 0.2vw + 11px, 14px);
+  --taskbar-h: 40px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--desktop);
+  color: var(--ink);
+  font-family: var(--ui);
+  font-size: var(--fs);
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+/* 98.css pins controls to an 11px bitmap font. Keep its bevels, drop the tiny text. */
+.title-bar,
+.window,
+button,
+input,
+label,
+textarea,
+select,
+.status-bar-field {
+  font-family: var(--ui);
+  font-size: var(--fs);
+  -webkit-font-smoothing: auto;
+}
+
+.title-bar-text {
+  font-size: var(--fs-small);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.title-bar-controls button {
+  min-width: 20px;
+  min-height: 18px;
+}
+
+button {
+  cursor: pointer;
+  min-height: 30px;
+  padding: 0 14px;
+}
+
+input[type='text'] {
+  height: 30px;
+  font-size: var(--fs);
+}
+
+.status-bar-field {
+  font-size: var(--fs-small);
+}
+
+a {
+  color: var(--navy);
+}
+
+.display {
+  font-family: var(--display);
+}
+
+.emoji {
+  font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+  -webkit-font-smoothing: auto;
+  /* 98.css draws button text as a text-shadow on transparent glyphs, which
+     turns color emoji into black silhouettes. */
+  color: #000;
+  text-shadow: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+kbd {
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 0 0.25em;
+  background: #ffeb3b;
+  color: #000;
+  border: 1px solid #000;
+  font-family: var(--ui);
+  font-weight: bold;
+  font-size: 0.85em;
+  line-height: 1.3;
+  text-align: center;
+}
+
+/* ---------- Desktop: the office is the wallpaper ---------- */
+
+.stage {
+  position: fixed;
+  inset: 0 0 var(--taskbar-h) 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.wallpaper {
+  position: relative;
+  width: min(100vw, calc((100dvh - var(--taskbar-h)) * 16 / 9));
+  aspect-ratio: 16 / 9;
+  min-height: 0;
+  overflow: hidden;
+  container-type: inline-size;
+  background: #000;
+}
+
+.wallpaper canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Soft CRT edge so the office reads as a screen, not a screenshot. */
+.wallpaper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.45);
+  background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 0 1px, transparent 1px 3px);
+}
+
+/* While the welcome window is up, the office steps back. */
+.wallpaper.dimmed canvas {
+  filter: saturate(0.75) brightness(0.8);
+  transition: filter 0.3s;
+}
+
+/* ---------- Hotspots and signs on the floor ---------- */
+
+.wallpaper .hotspot,
+.wallpaper .sign {
+  position: absolute;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+.hotspot {
+  background: transparent;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.hotspot:hover,
+.hotspot:focus-visible {
+  outline: 2px dashed #ffeb3b;
+  outline-offset: -2px;
+  background: rgba(255, 235, 59, 0.1);
+}
+
+.wallpaper .sign {
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.15em 0.5em 0.15em 0.2em;
+  background: #1b1b2f;
+  color: #fff;
+  font-family: var(--ui);
+  font-weight: bold;
+  font-size: clamp(11px, 1.15cqw, 16px);
+  line-height: 1.2;
+  white-space: nowrap;
+  border: 1px solid #000;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  cursor: pointer;
+  animation: sign-in 0.35s ease-out both;
+}
+
+.sign kbd {
+  font-family: var(--ui);
+  font-size: 0.85em;
+  font-weight: bold;
+}
+
+.wallpaper .sign:hover,
+.wallpaper .sign:focus-visible {
+  background: var(--navy);
+  outline: 2px solid #ffeb3b;
+}
+
+@keyframes sign-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+/* Small screens: signs become numbered pins; the Start menu carries the words. */
+@container (max-width: 640px) {
+  .sign .sign-label {
+    display: none;
+  }
+}
+
+.floor-tip {
+  position: absolute;
+  z-index: 5;
+  max-width: 240px;
+  background: #ffffe1;
+  border: 1px solid #000;
+  padding: 4px 8px;
+  font-size: var(--fs-small);
+  line-height: 1.35;
+  pointer-events: none;
+}
+
+.floor-tip strong {
+  display: block;
+}
+
+/* ---------- Welcome window ---------- */
+
+.welcome {
+  position: absolute;
+  left: max(16px, 5vw);
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(470px, 44vw);
+  z-index: 10;
+  animation: window-open 0.25s ease-out both;
+}
+
+@keyframes window-open {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.96);
+  }
+}
+
+.welcome-body {
+  padding: clamp(14px, 2vw, 22px);
+}
+
+.welcome-kicker {
+  font-size: var(--fs-small);
+  font-weight: bold;
+  color: var(--navy);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.welcome h1 {
+  font-family: var(--ui);
+  font-weight: bold;
+  font-size: clamp(30px, 3.2vw, 46px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 6px 0 10px;
+}
+
+.welcome .lede {
+  font-size: clamp(16px, 0.5vw + 13px, 19px);
+  margin: 0 0 8px;
+}
+
+.welcome .aside {
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.explore-button {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  align-items: center;
+  width: 100%;
+  min-height: 60px;
+  padding: 8px 16px;
+  margin-bottom: 10px;
+  text-align: left;
+  font-size: clamp(17px, 0.5vw + 14px, 20px);
+  font-weight: bold;
+}
+
+.explore-button .emoji {
+  grid-row: span 2;
+  font-size: 30px;
+}
+
+.explore-sub {
+  font-size: var(--fs-small);
+  font-weight: normal;
+  color: var(--muted);
+}
+
+.explore-button:hover {
+  background: #d4d0c8;
+}
+
+.explore-button:hover .emoji {
+  animation: walk 0.5s steps(2) infinite;
+}
+
+@keyframes walk {
+  50% {
+    transform: translateX(3px);
+  }
+}
+
+.welcome-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.welcome-actions button {
+  min-height: 36px;
+  padding: 0 6px;
+}
+
+/* Portrait screens: office on top, welcome window below it. */
+@media (max-aspect-ratio: 1/1) {
+  .stage {
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow-y: auto;
+  }
+  .wallpaper {
+    flex: none;
+    width: 100vw;
+  }
+  .welcome {
+    position: static;
+    transform: none;
+    width: calc(100% - 24px);
+    max-width: 560px;
+    margin: 12px auto 16px;
+    animation: none;
+  }
+}
+
+/* ---------- Taskbar and Start menu ---------- */
+
+.taskbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--taskbar-h);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background: var(--face);
+  box-shadow: inset 0 1px #dfdfdf, inset 0 2px #fff;
+  z-index: 60;
+}
+
+.taskbar button {
+  height: 32px;
+  min-height: 32px;
+  font-size: var(--fs-small);
+}
+
+.start-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  font-weight: bold;
+}
+
+.start-logo {
+  font-family: var(--display);
+  background: var(--navy);
+  color: #fff;
+  padding: 0 4px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.task-buttons {
+  flex: 1;
+  display: flex;
+  gap: 4px;
+  min-width: 0;
+}
+
+.task-buttons button {
+  flex: 0 1 180px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.task-buttons button.active {
+  box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px grey;
+  background: repeating-conic-gradient(#c0c0c0 0% 25%, #dcdcdc 0% 50%) 0 0 / 2px 2px;
+  font-weight: bold;
+}
+
+.tray {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px;
+  height: 32px;
+  box-shadow: inset -1px -1px #fff, inset 1px 1px grey;
+  font-size: var(--fs-small);
+  white-space: nowrap;
+}
+
+.tray button {
+  min-width: 0;
+  padding: 0 8px;
+  height: 24px;
+  min-height: 24px;
+}
+
+@media (max-width: 520px) {
+  .tray .tray-boring-label {
+    display: none;
+  }
+}
+
+.start-menu {
+  position: fixed;
+  left: 4px;
+  bottom: calc(var(--taskbar-h) - 2px);
+  z-index: 70;
+  display: flex;
+  width: min(330px, calc(100vw - 8px));
+  max-height: calc(100dvh - var(--taskbar-h) - 8px);
+  padding: 3px;
+}
+
+.start-banner {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  background: linear-gradient(0deg, var(--navy), #1084d0);
+  color: #c0c0c0;
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 600;
+  padding: 8px 4px;
+  white-space: nowrap;
+}
+
+.start-banner b {
+  color: #fff;
+}
+
+.start-items {
+  flex: 1;
+  list-style: none;
+  margin: 0;
+  padding: 2px 0;
+  overflow-y: auto;
+}
+
+.start-items button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 36px;
+  padding: 0 10px;
+  background: none;
+  border: none;
+  box-shadow: none;
+  text-align: left;
+}
+
+.start-items button:hover,
+.start-items button:focus-visible {
+  background: var(--navy);
+  color: #fff;
+  text-shadow: none;
+  outline: none;
+}
+
+.start-items .emoji {
+  font-size: 20px;
+  width: 24px;
+  text-align: center;
+}
+
+.start-items .start-place {
+  margin-left: auto;
+  font-size: var(--fs-small);
+  opacity: 0.7;
+}
+
+.start-sep {
+  height: 2px;
+  margin: 3px 4px;
+  box-shadow: inset 0 1px grey, inset 0 -1px #fff;
+}
+
+/* ---------- Dialog windows ---------- */
+
+.dialog-backdrop {
+  position: fixed;
+  inset: 0 0 var(--taskbar-h) 0;
+  z-index: 40;
+  background: rgba(0, 20, 20, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  width: min(780px, 100%);
+  max-height: 100%;
+  outline: none;
+  animation: dialog-open 0.18s ease-out both;
+}
+
+@keyframes dialog-open {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+.dialog-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Phones: windows open maximized, like Win98 on a small monitor. */
+@media (max-width: 600px) {
+  .dialog-backdrop {
+    padding: 0;
+    align-items: stretch;
+  }
+  .dialog {
+    width: 100%;
+    height: 100%;
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+.window-body.pad {
+  margin: 10px 12px 12px;
+}
+
+/* ---------- Content inside windows ---------- */
+
+.sunken {
+  background: var(--paper);
+  box-shadow: inset -1px -1px #fff, inset 1px 1px #808080, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+  padding: 12px 14px;
+}
+
+.notice {
+  background: #ffffe1;
+  border: 1px solid #000;
+  padding: 8px 10px;
+}
+
+.k {
+  color: var(--navy);
+  font-weight: bold;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.spread {
+  justify-content: space-between;
+}
+
+.pixel {
+  image-rendering: pixelated;
+  display: block;
+  width: 100%;
+}
+
+.case {
+  line-height: 1.55;
+}
+
+.case h3 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(22px, 1vw + 16px, 28px);
+  line-height: 1.15;
+  margin: 2px 0 6px;
+  color: var(--navy);
+}
+
+.case p {
+  margin: 4px 0 12px;
+}
+
+.case ul {
+  margin: 4px 0 12px;
+  padding-left: 20px;
+}
+
+.case li {
+  margin-bottom: 4px;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 8px;
+  margin: 6px 0 12px;
+}
+
+.metric {
+  background: #ffffe1;
+  border: 1px solid #000;
+  padding: 6px 8px;
+  font-weight: bold;
+  line-height: 1.25;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  border: 1px solid var(--navy);
+  color: var(--navy);
+  background: #fff;
+  padding: 1px 7px;
+  font-size: var(--fs-small);
+}
+
+/* Reception + tour */
+.badge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px;
+}
+
+.badge-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 6px;
+  min-height: 84px;
+  font-size: var(--fs);
+  font-weight: bold;
+}
+
+.badge-btn .icon {
+  font-size: 26px;
+}
+
+.progress {
+  display: flex;
+  gap: 4px;
+}
+
+.progress span {
+  flex: 1;
+  height: 8px;
+  background: #808080;
+}
+
+.progress span.on {
+  background: var(--navy);
+}
+
+/* Explorer */
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  gap: 10px;
+}
+
+.file-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 4px;
+  background: none;
+  border: none;
+  box-shadow: none;
+  min-width: 0;
+  min-height: 0;
+  text-align: center;
+  font-size: var(--fs-small);
+  line-height: 1.3;
+}
+
+.file-icon:hover .file-label,
+.file-icon:focus-visible .file-label {
+  background: var(--navy);
+  color: #fff;
+  text-shadow: none;
+}
+
+.file-icon:focus {
+  outline: 1px dotted #000;
+}
+
+.file-label {
+  padding: 0 3px;
+  word-break: break-word;
+}
+
+/* Messenger */
+.chat {
+  height: min(300px, 45dvh);
+  overflow-y: auto;
+  line-height: 1.45;
+}
+
+.chat .who-me {
+  color: var(--navy);
+  font-weight: bold;
+}
+
+.chat .who-you {
+  color: var(--danger);
+  font-weight: bold;
+}
+
+.typing {
+  color: #777;
+  font-style: italic;
+}
+
+/* Guestbook + Kanban notes */
+.cork {
+  background: var(--cork);
+  padding: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  min-height: 110px;
+}
+
+.note {
+  width: 150px;
+  min-height: 84px;
+  padding: 8px;
+  font-family: var(--display);
+  font-size: 16px;
+  line-height: 1.2;
+  color: #222;
+  word-break: break-word;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.25);
+}
+
+.kanban {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.kanban .note {
+  width: auto;
+  min-height: 0;
+  margin-top: 8px;
+}
+
+.error {
+  color: var(--danger);
+  min-height: 18px;
+  margin-top: 4px;
+  font-size: var(--fs-small);
+}
+
+/* ---------- Boring mode: plain, fast, recruiter-safe ---------- */
+
+.boring {
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  background: #fff;
+  color: #1a1a1a;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.boring-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 16px 80px;
+}
+
+.boring h1 {
+  font-size: 34px;
+  margin: 0;
+}
+
+.boring h2 {
+  font-size: 19px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 4px;
+  margin: 28px 0 10px;
+}
+
+.boring h3 {
+  font-size: 16px;
+  margin: 12px 0 2px;
+}
+
+.boring a {
+  color: #0b57d0;
+}
+
+.boring ul {
+  margin: 4px 0;
+  padding-left: 20px;
+}
+
+.boring .meta {
+  color: #555;
+}
+
+.boring-toggle {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .boring {
+    background: #121212;
+    color: #e8e8e8;
+  }
+  .boring h2 {
+    border-color: #333;
+  }
+  .boring a {
+    color: #8ab4f8;
+  }
+  .boring .meta {
+    color: #aaa;
+  }
+}
+
+/* Only shown on portrait screens, in the space under the office. */
+.explore-hint {
+  display: none;
+  color: #fff;
+  text-align: center;
+  margin: 16px;
+  font-size: var(--fs);
+}
+
+@media (max-aspect-ratio: 1/1) {
+  .explore-hint {
+    display: block;
+  }
+}
+
+/* Short landscape screens (phones on their side): keep the whole window visible. */
+@media (max-height: 520px) and (min-aspect-ratio: 1/1) {
+  .welcome {
+    top: 8px;
+    max-height: calc(100% - 16px);
+    transform: none;
+    overflow-y: auto;
+    animation: none;
+  }
+  .welcome h1 {
+    font-size: 28px;
+    margin: 2px 0 6px;
+  }
+  .welcome .aside {
+    display: none;
+  }
+  .welcome-body {
+    padding: 10px 14px;
+  }
+}
+
+.lobby-caption {
+  background: #5d4a7a;
+  color: #fff;
+  font-weight: bold;
+  font-size: var(--fs-small);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+}
+
+/* Win98 notification balloon pointing at the agents. */
+.balloon {
+  position: absolute;
+  z-index: 4;
+  width: min(300px, 46cqw);
+  padding: 10px 12px 10px;
+  background: #ffffe1;
+  border: 1px solid #000;
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.35);
+  font-size: var(--fs-small);
+  line-height: 1.4;
+  animation: sign-in 0.3s ease-out 0.4s both;
+}
+
+/* Tail pointing up at ROUTER-7's desk. */
+.balloon::before,
+.balloon::after {
+  content: '';
+  position: absolute;
+  left: 22px;
+  border: 10px solid transparent;
+  border-top: 0;
+}
+
+.balloon::before {
+  top: -11px;
+  border-bottom: 11px solid #000;
+}
+
+.balloon::after {
+  top: -9px;
+  left: 23px;
+  border-width: 0 9px 10px;
+  border-bottom-color: #ffffe1;
+}
+
+.balloon strong {
+  display: block;
+  padding-right: 20px;
+  font-size: var(--fs);
+}
+
+.balloon p {
+  margin: 4px 0 8px;
+}
+
+.balloon button {
+  min-height: 26px;
+  font-size: var(--fs-small);
+}
+
+.balloon .balloon-close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 18px;
+  min-width: 18px;
+  min-height: 18px;
+  height: 18px;
+  padding: 0;
+  background: #c0c0c0
+    url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='7' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M0 0h2v1h1v1h2V1h1V0h2v1H7v1H6v1H5v1h1v1h1v1h1v1H6V6H5V5H3v1H2v1H0V6h1V5h1V4h1V3H2V2H1V1H0V0z'/%3E%3C/svg%3E")
+    center no-repeat;
+}
+
+@container (max-width: 640px) {
+  .balloon {
+    width: 62cqw;
+    padding: 6px 8px;
+  }
+  .balloon p {
+    display: none;
+  }
+}
